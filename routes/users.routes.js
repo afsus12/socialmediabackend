@@ -5,4 +5,4 @@ router.post("/register",userController.registre);
 router.post("/login",userController.login);
 router.post("/userprofile",userController.userProfile);
 
-module.exports =router;  /* eee */
+module.exports =router;  
