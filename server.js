@@ -4,13 +4,20 @@ const express = require('express');
 const    app = express();
 const   port = process.env.PORT || 4000;
 const mongoose=require('mongoose');
+const dbconfig=require('./config/db.config');
+const auth=require('./middlewares/auth');
+const errors=require('./middlewares/errors');
+
 const User=require("./models/users")
-mongoose.connect('mongodb://localhost:27017/socialmedia',
+mongoose.Promise=global.Promise; 
+mongoose.connect(dbconfig.db,
 {
  useNewUrlParser:true,
  useUnifiedTopology:true
 
-})
+}).then(()=>{console.log("connected to db")},(error)=>{
+    console.log("not connected to db"+error);
+});
 app.use(bodyParser.json());
 app.get("/",async (req,res )=> {
 
