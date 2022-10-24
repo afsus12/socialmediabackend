@@ -32,3 +32,4 @@ transform:(document,returnedObject)=>{
 userSchema.plugin(uniqueValidator,{message:"Email already in user."}); 
 const User=mongoose.model("user",userSchema)
 module.exports=User;
+// hammza 
