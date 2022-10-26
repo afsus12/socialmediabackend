@@ -7,6 +7,7 @@ const dbconfig=require('./config/db.config');
 const auth=require('./middlewares/auth');
 const errors=require('./middlewares/errors');
 const { unless } = require("express-unless")
+const adminRouter=require('./routers/admin.router.js')  
 
 /* const User=require("./models/user.model") */
 const    app = express();
@@ -33,6 +34,7 @@ app.use(auth.authenticateToken.unless
     app.use(express.json());
     app.use("/users",require("./routes/users.routes"));
     app.use(errors.errorHandler);
+    app.use('/admin',adminRouter)
 
 
 

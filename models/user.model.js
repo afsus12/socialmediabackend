@@ -9,7 +9,7 @@ const userSchema= new Schema({
 
    },
     username:{
-        type:String,required:true
+        type:String,required:true,unique:true
     },
     password:{
         type:String,required:true,
@@ -18,6 +18,7 @@ const userSchema= new Schema({
         type: Date,
         default: Date.now(),
     }
+    
 },
 )
 userSchema.set("toJSON",{
