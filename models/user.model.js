@@ -8,6 +8,8 @@ const userSchema= new Schema({
     unique:true,
 
    },
+   first_name: { type: String, default: null },
+  last_name: { type: String, default: null },
     username:{
         type:String,required:true,unique:true
     },

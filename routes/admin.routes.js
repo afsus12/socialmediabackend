@@ -6,8 +6,9 @@ const AdminBroMongoose = require('admin-bro-mongoose')
 const mongoose = require('mongoose')
 
 AdminBro.registerAdapter(AdminBroMongoose)
-
-const AdminBro =new AdminBro({
+const User=require("../models/user.model")
+const adminBro =new AdminBro({
+    resources:[User],
     databases: [mongoose],
     rootPath :'/admin' ,
 })

@@ -7,7 +7,7 @@ const dbconfig=require('./config/db.config');
 const auth=require('./middlewares/auth');
 const errors=require('./middlewares/errors');
 const { unless } = require("express-unless")
-const adminRouter=require('./routers/admin.router.js')  
+const adminRouter=require('./routes/admin.routes.js')  
 
 /* const User=require("./models/user.model") */
 const    app = express();
@@ -20,12 +20,13 @@ mongoose.connect(dbconfig.db,
 }).then(()=>{console.log("connected to db")},(error)=>{
     console.log("not connected to db"+error);
 });
+app.use('/admin',adminRouter)
 auth.authenticateToken.unless= unless;
 app.use(auth.authenticateToken.unless
-    ({path:[{url:"/users/login",methods:["POST"]},
+    ({path:[{url:"/users/login",methods:["POST"]},{url:"/admin",methods:["POST"]},
 
 {url:"/users/register",methods:["POST"]}
-]
+],
 
 
     })
@@ -34,7 +35,7 @@ app.use(auth.authenticateToken.unless
     app.use(express.json());
     app.use("/users",require("./routes/users.routes"));
     app.use(errors.errorHandler);
-    app.use('/admin',adminRouter)
+
 
 
 
