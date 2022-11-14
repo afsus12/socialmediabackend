@@ -4,12 +4,16 @@ const AdminBroExpress = require('admin-bro-expressjs')
 const AdminBroMongoose = require('admin-bro-mongoose')
 
 const mongoose = require('mongoose')
-
+const User=require('../models/user.model')
 AdminBro.registerAdapter(AdminBroMongoose)
-const User=require("../models/user.model")
+
+
 const adminBro =new AdminBro({
-    resources:[User],
+
+
     databases: [mongoose],
+    resources:[User],
+
     rootPath :'/admin' ,
 })
 const ADMIN = {

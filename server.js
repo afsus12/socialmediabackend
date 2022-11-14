@@ -23,7 +23,7 @@ mongoose.connect(dbconfig.db,
 app.use('/admin',adminRouter)
 auth.authenticateToken.unless= unless;
 app.use(auth.authenticateToken.unless
-    ({path:[{url:"/users/login",methods:["POST"]},{url:"/admin",methods:["POST"]},
+    ({path:[{url:"/users/login",methods:["POST"]},
 
 {url:"/users/register",methods:["POST"]}
 ],

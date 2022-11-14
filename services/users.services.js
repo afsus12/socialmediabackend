@@ -32,7 +32,10 @@ async function login({ username, password }, callback) {
             return callback({ message: "Username Required" });
 
         }
+        if (params.email === undefined) {
+            return callback({ message: "Email Required" });
 
+        }
         const user = new User(params);
         user.save().then((response) => { return callback(null, response); }).catch((error)=>{
           return callback(error);
