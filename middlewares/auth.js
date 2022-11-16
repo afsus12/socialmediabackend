@@ -10,7 +10,18 @@ req.user=user;
 next();
 });
 }
-
+function validateUser(req, res, next) {
+    jwt.verify(token,"Social_MediaKey", function(err, decoded) {
+      if (err) {
+        res.json({status:"error", message: err.message, data:null});
+      }else{
+        // add user id to request
+        req.body.userId = decoded.id;
+        next();
+      }
+    });
+    
+  }
 function generateAccessToken(username){
 return jwt.sign({data:username},"Social_MediaKey",{
 
@@ -19,6 +30,7 @@ return jwt.sign({data:username},"Social_MediaKey",{
 });
 }
 module.exports={
+    validateUser,
     authenticateToken,
     generateAccessToken,
 };

@@ -1,5 +1,7 @@
 const { stringifyId } = require("admin-bro-mongoose/src/resource");
 const mongoose=require("mongoose");
+
+const saltRounds = 10;
 const {Schema}=mongoose;
 const uniqueValidator=require("mongoose-unique-validator");
 const userSchema= new Schema({
@@ -82,6 +84,7 @@ const userSchema= new Schema({
     
 },  {timestamps:true}
 )
+
 userSchema.set("toJSON",{
 transform:(document,returnedObject)=>{
     returnedObject.id=returnedObject._id.toString(),
@@ -91,6 +94,7 @@ transform:(document,returnedObject)=>{
 },
 
 });
+
 userSchema.plugin(uniqueValidator,{message:"Email already in user."}); 
-const User=mongoose.model("user",userSchema)
-module.exports=User;
+
+module.exports=mongoose.model("user",userSchema)

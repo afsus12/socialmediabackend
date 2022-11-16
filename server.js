@@ -6,9 +6,13 @@ const mongoose=require('mongoose');
 const dbconfig=require('./config/db.config');
 const auth=require('./middlewares/auth');
 const errors=require('./middlewares/errors');
-const { unless } = require("express-unless")
-const adminRouter=require('./routes/admin.routes.js')  
 
+const adminRouter=require('./routes/admin.routes.js')  
+const logger = require('morgan');
+
+const users = require('./routes/users.routes');
+const posts = require('./routes/post.routes');
+const authentification=require('./routes/authen.routes') 
 /* const User=require("./models/user.model") */
 const    app = express();
 mongoose.Promise=global.Promise; 
@@ -18,20 +22,17 @@ mongoose.connect(dbconfig.db,
  useUnifiedTopology:true    
 
 }).then(()=>{console.log("connected to db")},(error)=>{
-    console.log("not connected to db"+error);
-});
+    console.log("not connected to db"+error);});
+    app.use(logger('dev'));
+    app.use(express.json());
+//public routes
 app.use('/admin',adminRouter)
-auth.authenticateToken.unless= unless;
-app.use(auth.authenticateToken.unless
-    ({path:[{url:"/users/login",methods:["POST"]},
-
-{url:"/users/register",methods:["POST"]}
-],
+app.use('/authen', authentification);
+app.use('/posts',posts);
+//private routes
+app.use('/users',auth.authenticateToken ,users);
 
 
-    })
-    
-    ); 
     app.use(express.json());
     app.use("/users",require("./routes/users.routes"));
     app.use(errors.errorHandler);
@@ -44,37 +45,3 @@ app.listen(port, () => {
 });
 
 
-/*
-
-app.get("/",async (req,res )=> {
-
-res.send("hello");
-
-} );
-app.post("/",async (req,res )=> {
-
-    res.send("hello");
-    
-    } );
-    app.post("/api/register",async (req,res )=> {
- 
-        console.log(req.body)
-        const {username,password}=req.body
-       const password=await bcrypt.hash(password,10) 
-      res.json({status:'ok'+req.body["username"]})
-      try{
-         const response =await User.create(
-                { username,password
-                }
-                )
-  
-  console.log(response)
-  
-  
-      } catch (error){
-          console.log(error)
-          return res.json({status:"erorr"})
-      }
-  
-  
-          } ); */
