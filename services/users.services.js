@@ -10,7 +10,7 @@ async function login({ username, password }, callback) {
     if (user != null) {
 
         if (bcrypt.compareSync(password, user.password)) {
-            const token = auth.generateAccessToken(username);
+            const token = auth.generateAccessToken(username,user.isAdmin,user._id);
             return callback(null, { ...user.toJSON(), token });
 
         }

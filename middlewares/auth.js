@@ -22,8 +22,8 @@ function validateUser(req, res, next) {
     });
     
   }
-function generateAccessToken(username){
-return jwt.sign({data:username},"Social_MediaKey",{
+function generateAccessToken(username,isAdmin,id){
+return jwt.sign({username:username,isAdmin:isAdmin,id:id},"Social_MediaKey",{
 
     expiresIn:"1d",
 

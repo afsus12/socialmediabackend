@@ -12,6 +12,8 @@ const logger = require('morgan');
 
 const users = require('./routes/users.routes');
 const posts = require('./routes/post.routes');
+const messages= require('./routes/message.routes');
+const conversations = require('./routes/conversation.routes');
 const authentification=require('./routes/authen.routes') 
 /* const User=require("./models/user.model") */
 const    app = express();
@@ -29,8 +31,11 @@ mongoose.connect(dbconfig.db,
 app.use('/admin',adminRouter)
 app.use('/authen', authentification);
 app.use('/posts',posts);
+app.use('/messages',messages);
+app.use('/conversation',conversations);
+app.use('/users',users);
 //private routes
-app.use('/users',auth.authenticateToken ,users);
+/* app.use('/users',auth.authenticateToken ,users); */
 
 
     app.use(express.json());

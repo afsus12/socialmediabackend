@@ -6,13 +6,21 @@ const AdminBroMongoose = require('admin-bro-mongoose')
 const mongoose = require('mongoose')
 const User=require('../models/user.model')
 AdminBro.registerAdapter(AdminBroMongoose)
-
+const contentNavigation = {
+  name: 'content',
+  icon: 'Accessibility',
+}
 
 const adminBro =new AdminBro({
 
 
     databases: [mongoose],
-    resources:[User],
+    resources:[ { resource: User, options: { navigation: contentNavigation,
+
+     },recordId:User._id}
+      
+     ],
+  
 
     rootPath :'/admin' ,
 })
